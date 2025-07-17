@@ -1,0 +1,1075 @@
+:root {
+    --primary-color: #4a90e2;
+    --background-color: #f5f7fa;
+    --text-color: #333;
+    --card-background: #ffffff;
+    --border-color: #e0e0e0;
+    --completed-color: #27ae60;
+    --difficulty-low: #2ecc71;
+    --difficulty-medium: #f1c40f;
+    --difficulty-high: #e74c3c;
+    --placeholder-color: #999;
+    --button-hover-bg: #3a80d2;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-radius: 10px;
+    --transition: all 0.3s ease;
+}
+
+[data-theme="dark"] {
+    --primary-color: #74b9ff;
+    --background-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --card-background: #2c2c2c;
+    --border-color: #555;
+    --completed-color: #27ae60;
+    --placeholder-color: #aaa;
+    --button-hover-bg: #5a9de5;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+    --difficulty-low: #27ae60;
+    --difficulty-medium: #f39c12;
+    --difficulty-high: #c0392b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    transition: var(--transition);
+    line-height: 1.6;
+}
+
+/* Loader Styles */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+.loader.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--primary-color);
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header h1 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.theme-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.theme-btn,
+.export,
+.back-up,
+.color-btn {
+    background: var(--primary-color);
+    color: white;
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.theme-btn:hover,
+.export:hover,
+.back-up:hover,
+.color-btn:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Add Todo Form */
+.add-todo {
+    background: var(--card-background);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.add-new-task__title {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    background: var(--card-background);
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--placeholder-color);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.add-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1rem;
+    margin-top: auto;
+}
+
+.add-btn:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: var(--card-background);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.filter-group,
+.sort-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-group label,
+.sort-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-group select,
+.sort-group select {
+    padding: 10px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--card-background);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    min-width: 150px;
+    transition: var(--transition);
+}
+
+.filter-group select:focus,
+.sort-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* Todo List */
+.todo-list {
+    display: grid;
+    gap: 20px;
+}
+
+.todo-item {
+    background: var(--card-background);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: var(--transition);
+    position: relative;
+}
+
+.todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(---shadow-color);
+}
+
+.todo-item.complete {
+    background: rgba(39, 174, 96, 0.1);
+    border-color: var(--completed-color);
+}
+
+.todo-item.complete .todo-title,
+.todo-item.complete .todo-description {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.todo-title {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 600;
+    color: var(--text-color);
+    flex: 1;
+    word-break: break-word;
+}
+
+.todo-difficulty {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.difficulty-low {
+    background: var(--difficulty-low);
+}
+
+.difficulty-medium {
+    background: var(--difficulty-medium);
+}
+
+.difficulty-high {
+    background: var(--difficulty-high);
+}
+
+.todo-category {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.todo-category::before {
+    content: "📁";
+    font-size: 0.8rem;
+}
+
+.todo-description {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.todo-time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: var(--background-color);
+    padding: 15px;
+    border-radius: var(--border-radius);
+}
+
+.todo-time span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.todo-time span::before {
+    content: "⏱️";
+}
+
+.time-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.time-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.time-btn:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-1px);
+}
+
+.time-btn.start {
+    background: var(--completed-color);
+}
+
+.time-btn.stop {
+    background: #e74c3c;
+}
+
+.time-btn.reset {
+    background: #f39c12;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.action-btn.delete {
+    background: #e74c3c;
+}
+
+.action-btn.delete:hover {
+    background: #c0392b;
+}
+
+.action-btn.complete {
+    background: var(--completed-color);
+}
+
+.action-btn.complete:hover {
+    background: #219653;
+}
+
+.action-btn.edit {
+    background: #f39c12;
+}
+
+.action-btn.edit:hover {
+    background: #d68910;
+}
+
+.action-btn.export {
+    background: #8e44ad;
+}
+
+.action-btn.export:hover {
+    background: #7d3c98;
+}
+
+/* Modal Styles */
+.color-modal .modal-content,
+.export-modal .modal-content {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.color-modal .modal-header,
+.export-modal .modal-header {
+    border-bottom: 2px solid var(--border-color);
+    padding: 20px;
+}
+
+.color-modal .modal-title,
+.export-modal .modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.color-modal .modal-body {
+    padding: 25px;
+}
+
+.export-modal .modal-body {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.export-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.export-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 100px;
+}
+
+.export-btn:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.color-option {
+    margin-bottom: 20px;
+}
+
+.color-option label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 12px;
+    display: block;
+}
+
+.color-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.color-btn-option {
+    width: 50px;
+    height: 50px;
+    border: 3px solid transparent;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.color-btn-option:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    border-color: var(--text-color);
+}
+
+.color-btn-green {
+    background: #27ae60;
+}
+
+.color-btn-yellow {
+    background: #f1c40f;
+}
+
+.color-btn-blue {
+    background: #4a90e2;
+}
+
+.color-btn-red {
+    background: #e74c3c;
+}
+
+/* Media Queries */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .todo-list {
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    }
+}
+
+@media (max-width: 1199px) {
+    .container {
+        max-width: 1000px;
+    }
+}
+
+@media (max-width: 992px) {
+    body {
+        padding: 15px;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .theme-controls {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .filter-group,
+    .sort-group {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .filter-group select,
+    .sort-group select {
+        flex: 1;
+        min-width: auto;
+    }
+
+    .todo-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .todo-difficulty {
+        align-self: flex-start;
+    }
+
+    .todo-time {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .time-controls {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .todo-actions {
+        justify-content: center;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .theme-btn,
+    .export,
+    .back-up,
+    .color-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        min-width: 80px;
+    }
+
+    .btn-text {
+        display: none;
+    }
+
+    .add-todo {
+        padding: 20px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .controls {
+        padding: 15px;
+    }
+
+    .filter-group label,
+    .sort-group label {
+        font-size: 0.9rem;
+    }
+
+    .todo-item {
+        padding: 20px;
+    }
+
+    .todo-title {
+        font-size: 1.1rem;
+    }
+
+    .todo-actions {
+        gap: 6px;
+    }
+
+    .action-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .time-btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .color-modal .modal-dialog,
+    .export-modal .modal-dialog {
+        margin: 15px;
+    }
+
+    .color-modal .modal-body,
+    .export-modal .modal-body {
+        padding: 20px;
+    }
+
+    .color-btn-option {
+        width: 45px;
+        height: 45px;
+    }
+
+    .export-btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        min-width: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding: 8px;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .theme-controls {
+        gap: 8px;
+    }
+
+    .theme-btn,
+    .export,
+    .back-up,
+    .color-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        min-width: 70px;
+    }
+
+    .add-todo {
+        padding: 15px;
+    }
+
+    .add-new-task__title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .controls {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .filter-group select,
+    .sort-group select {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+        min-width: 120px;
+    }
+
+    .todo-item {
+        padding: 15px;
+    }
+
+    .todo-title {
+        font-size: 1rem;
+    }
+
+    .todo-category,
+    .todo-description {
+        font-size: 0.85rem;
+    }
+
+    .todo-time {
+        padding: 12px;
+    }
+
+    .todo-time span {
+        font-size: 0.9rem;
+    }
+
+    .time-controls {
+        gap: 6px;
+    }
+
+    .time-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    .todo-actions {
+        gap: 5px;
+        flex-direction: column;
+    }
+
+    .action-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        width: 100%;
+    }
+
+    .color-buttons,
+    .export-options {
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .color-btn-option {
+        width: 40px;
+        height: 40px;
+    }
+
+    .export-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        min-width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.3rem;
+    }
+
+    .theme-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .theme-btn,
+    .export,
+    .back-up,
+    .color-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-text {
+        display: inline;
+    }
+
+    .filter-group,
+    .sort-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-group select,
+    .sort-group select {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .todo-time {
+        text-align: center;
+    }
+
+    .time-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .time-btn {
+        flex: 1;
+        margin: 0 2px;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        padding: 5px;
+    }
+
+    .container {
+        padding: 0 5px;
+    }
+
+    .add-todo,
+    .controls,
+    .todo-item {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .todo-title {
+        font-size: 0.95rem;
+    }
+
+    .action-btn,
+    .time-btn {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    .color-btn-option {
+        width: 35px;
+        height: 35px;
+    }
+
+    .export-btn {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+        color: black;
+        padding: 0;
+    }
+
+    .loader,
+    .theme-controls,
+    .add-todo,
+    .controls,
+    .todo-actions,
+    .time-controls {
+        display: none !important;
+    }
+
+    .todo-item {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+
+    .header h1 {
+        color: black;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #000;
+        --shadow-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .todo-item {
+        border-width: 3px;
+    }
+
+    .action-btn,
+    .time-btn,
+    .theme-btn,
+    .export,
+    .back-up,
+    .color-btn,
+    .export-btn {
+        border: 2px solid currentColor;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
